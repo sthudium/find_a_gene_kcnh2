@@ -73,8 +73,16 @@ kcnh2.anno <- pdb.annotate(pdb.ids, anno.terms = c("structureId",
 View(kcnh2.anno)
 ```
 
-Merge the columns that we want:
+change rownames
 ```{r}
+rownames(kcnh2.anno) <- kcnh2.anno$structureId
+kcnh2.anno <- kcnh2.anno[, -1]
+head(kcnh2.anno)
+```
 
+Adding the e-value and identity columns to this annotated df to obtain a table of the top 3 unique hits
+```{r}
+kcnh2.blast.trim.eval <- kcnh2.blast.trim[, c("identity", "evalue")]
+kcnh2.top3.pdb <- cbind(kcnh2.anno, kcnh2.blast.trim.eval)
 ```
 
