@@ -23,10 +23,58 @@ aln.test$ali <-  aln.test$ali[ , 107:990]
 
 ```
 
-Use the seqaln() function on the trimmed fasta file
+TO DO: trim the new alignment file down to 385:900
+First, read in
 ```{r}
-aln.test.trim <- seqaln(aln.test)
-View(aln.test.trim)
+aln.kcnh2 <- read.fasta("muscle_aln_kcnh2_rev.fst")
 ```
 
-TO DO: trim the new alignment file down to 385:900
+Trim down to the original sequence of interest
+```{r}
+aln.kcnh2$ali <- aln.kcnh2$ali[ , 385:900]
+View(aln.kcnh2)
+```
+
+Write new fasta file using the trimmed aligned sequences
+```{r}
+aln.kcnh2.new <- write.fasta(aln.kcnh2, file = "muscle_aln_kcnh2_trim")
+```
+
+Create percent identity matrix; first trying seqidentity function
+```{r}
+aln.kcnh2.mat <- seqidentity(aln.kcnh2)
+View(aln.kcnh2.mat)
+```
+
+Make a heatmap using the identity matrix:
+```{r}
+aln.kcnh2.heat <- heatmap(aln.kcnh2.mat)
+```
+
+
+Q8: Blast pdb for the similar structures. Using the AN for human KCNH2 because the nemtode sequence has a lot of gaps
+```{r}
+kcnh2.blast <- blast.pdb("AAI27674.1")
+
+kcnh2.blast.trim <- kcnh2.blast$hit.tbl[1:3, ]
+
+kcnh2.blast.plot <- plot.blast(kcnh2.blast)
+```
+
+
+Annotate the pdb outputs
+```{r}
+pdb.ids <-kcnh2.blast.trim$subjectids
+pdb.annotate(pdb.ids)
+kcnh2.anno <- pdb.annotate(pdb.ids, anno.terms = c("structureId", 
+                                                   "experimentalTechnique",
+                                                   "resolution",
+                                                   "source"))
+View(kcnh2.anno)
+```
+
+Merge the columns that we want:
+```{r}
+
+```
+
