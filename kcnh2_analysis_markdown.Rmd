@@ -29,3 +29,4 @@ aln.test.trim <- seqaln(aln.test)
 View(aln.test.trim)
 ```
 
+TO DO: trim the new alignment file down to 385:900
