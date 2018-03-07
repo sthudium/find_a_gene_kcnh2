@@ -86,3 +86,9 @@ kcnh2.blast.trim.eval <- kcnh2.blast.trim[, c("identity", "evalue")]
 kcnh2.top3.pdb <- cbind(kcnh2.anno, kcnh2.blast.trim.eval)
 ```
 
+Generate a pdb file of one of the proteins from the previous questions. Then write a new pbd file that can be viewed in vmd
+```{r}
+kcnh2.str <- read.pdb("5VA1")
+write.pdb(kcnh2.str)
+```
+
