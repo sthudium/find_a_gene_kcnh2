@@ -1,0 +1,31 @@
+---
+title: "Find a gene project - Kcnh2 (a VG potassium channel)"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I began by testing the muscle/seqaln function in bio3d on some aligned hemaglobin beta sequences.
+
+First read in the fasta file obtained from SeaView
+
+```{r}
+aln.test <- read.fasta("~/Desktop/test_muscle_aln.fst")
+
+```
+
+Trim the file down to the input sequence
+
+```{r}
+aln.test$ali <-  aln.test$ali[ , 107:990]
+
+```
+
+Use the seqaln() function on the trimmed fasta file
+```{r}
+aln.test.trim <- seqaln(aln.test)
+View(aln.test.trim)
+```
+
