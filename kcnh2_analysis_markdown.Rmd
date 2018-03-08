@@ -48,7 +48,10 @@ View(aln.kcnh2.mat)
 
 Make a heatmap using the identity matrix:
 ```{r}
+par(mai=c(8, 3, 8, 1))
 aln.kcnh2.heat <- heatmap(aln.kcnh2.mat)
+test.heatmap <- pheatmap(aln.kcnh2.mat, color = )
+pheatmap
 ```
 
 
