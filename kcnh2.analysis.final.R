@@ -3,6 +3,16 @@
 ## Load bio3d
 library(bio3d)
 
+#Generating a heatmap
+par(mai=c(8, 3, 9, 1))
+alnment.heatmap <- pheatmap(aln.kcnh2.mat, 
+                            color = viridis(200), 
+                            cellwidth = 20,
+                            cellheight = 20,
+                            fontsize = 8,
+                            filename = "~/Dropbox/bimm143_rproj/find_a_gene/aln_heatmap.jpg")
+
+
 ## Perform pdb.blast() on the human kcnh2 sequence obtained via accession number
 human.seq <- "AAI27674.1"
 kcnh2.pdb <- blast.pdb(human.seq)
@@ -48,3 +58,16 @@ pdb.unique
 
 hum.kcnh2.str <- read.pdb("5VA1")
 write.pdb(hum.kcnh2.str)
+
+## display conserved sequence between 5VA1 and "novel"
+## Locate the accession number for 5VA1
+
+kcnh2.pdb$hit.tbl[1,]
+
+## AN is the same as for the original human sequnece. 
+## compare this sequence to the 'novel' nemata sequence: novel.seq vs human.seq
+
+novel.seq <- read.fasta("jk291807.1.fasta")
+
+
+

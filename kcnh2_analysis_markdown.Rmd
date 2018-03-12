@@ -7,24 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I began by testing the muscle/seqaln function in bio3d on some aligned hemaglobin beta sequences.
-
-First read in the fasta file obtained from SeaView
-
-```{r}
-aln.test <- read.fasta("~/Desktop/test_muscle_aln.fst")
-
-```
-
-Trim the file down to the input sequence
-
-```{r}
-aln.test$ali <-  aln.test$ali[ , 107:990]
-
-```
-
-TO DO: trim the new alignment file down to 385:900
-First, read in
+First, read in the alignment file
 ```{r}
 aln.kcnh2 <- read.fasta("muscle_aln_kcnh2_rev.fst")
 ```
@@ -48,10 +31,10 @@ View(aln.kcnh2.mat)
 
 Make a heatmap using the identity matrix:
 ```{r}
-par(mai=c(8, 3, 8, 1))
-aln.kcnh2.heat <- heatmap(aln.kcnh2.mat)
-test.heatmap <- pheatmap(aln.kcnh2.mat, color = )
-pheatmap
+library(pheatmap)
+par(mai=c(8, 3, 9, 1))
+alnment.heatmap <- pheatmap(aln.kcnh2.mat)
+
 ```
 
 
@@ -93,5 +76,9 @@ Generate a pdb file of one of the proteins from the previous questions. Then wri
 ```{r}
 kcnh2.str <- read.pdb("5VA1")
 write.pdb(kcnh2.str)
+```
+
+```{r}
+pdb.unique
 ```
 
