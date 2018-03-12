@@ -9,11 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Perform pdb.blast() on the human kcnh2 sequence obtained via accession number
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(bio3d)
 human.seq <- "AAI27674.1"
 kcnh2.pdb <- blast.pdb(human.seq)
-str(kcnh2.pdb)
 ```
 
 Trim down the blast.pdb object to contain only the pdb ids and evalues
@@ -25,18 +24,21 @@ head(kcnh2.pdb.trim)
 
 Call pdb.annotate() on the human kcnh2 sequence; select the desired data columns
 
-```{r}
+```{r, warning=FALSE}
 pdb.ids <- kcnh2.pdb$hit.tbl$subjectids
 kcnh2.anno <- pdb.annotate(pdb.ids, anno.terms = c("structureId", 
                                                      "experimentalTechnique",
                                                      "source",
                                                      "resolution"))
+rownames(kcnh2.anno) <- kcnh2.anno$structureId
+kcnh2.anno <- kcnh2.anno[, -1]
+
 head(kcnh2.anno)
 ```
 
 Bind the anno and trimmed matrices together
 
-```{r}
+```{r, message=FALSE}
 kcnh2.full.anno <- cbind(kcnh2.anno, kcnh2.pdb.trim)
 head(kcnh2.full.anno)
 ```
@@ -44,26 +46,29 @@ head(kcnh2.full.anno)
 Select three unique hits
 
 ```{r}
-pdb.unique <- kcnh2.full.anno[c("5VA1", "5K7L", "5U6O_A"), ]
+pdb.unique <- kcnh2.full.anno[c("5VA1", "5K7L", "5U6O"), ]
 pdb.unique
 ```
 
 ## Rename columns to reflect evalue
 
-```{r}
-colnames(pdb.unique) <- c("structureId", 
-                           "experimentalTechnique", 
+```{r, results='asis'}
+colnames(pdb.unique) <- c( "experimentalTechnique", 
                            "source",
                            "resolution",
                            "identity",
                            "evalue")
+                           
 
-pdb.unique
+
+knitr::kable(pdb.unique, 
+             caption = "Annotated Parameters of Unique PDB Hits", 
+             align = 'l')
 ```
 
 Generate a pdb object of 5VA1 structure for display in VMD
 
-```{r}
+```{r, message=FALSE}
 hum.kcnh2.str <- read.pdb("5VA1")
 write.pdb(hum.kcnh2.str, file = "5VA1_str")
 ```
