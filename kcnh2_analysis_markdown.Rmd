@@ -14,7 +14,7 @@ aln.kcnh2 <- read.fasta("muscle_aln_kcnh2_rev.fst")
 
 Trim down to the original sequence of interest
 ```{r}
-aln.kcnh2$ali <- aln.kcnh2$ali[ , 385:900]
+aln.kcnh2$ali <- aln.kcnh2$ali[ , 512:825]
 View(aln.kcnh2)
 ```
 
